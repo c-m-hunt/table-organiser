@@ -11,37 +11,49 @@ from table_planner import (
 )
 from table_planner.report import print_table_requirements_report
 
-tables = get_tables()
-groups = get_groups()
 
+class TableSolver:
+    def __init__(self, tables: List[Table], groups: List[Group]):
+        self.tables = tables
+        self.groups = groups
+        self.current_group_idx = 0
+        print_table_requirements_report(tables)
+        print_start_report(groups, tables)
+        self.depth = 0
 
-def solve():
-    for i in range(len(groups)):
-        added = False
-        group = groups[i]
-        if group.count == 0:
-            continue
+    def solve_tables(self):
+        self.solve()
 
-        for table in tables:
+    def solve(self) -> bool:
+
+        if self.current_group_idx == len(self.groups):
+            return True
+        group = self.groups[self.current_group_idx]
+        for table in self.tables:
             if can_add(table, group):
                 table.groups.append(group)
-                added = True
-                break
-        if not added:
-            print(f"Unable to add group {group.name}")
-    return tables
+                self.current_group_idx += 1
+                if self.solve():
+                    return True
+                del table.groups[len(table.groups) - 1]
+                self.current_group_idx -= 1
+        # print(f"Could not add group {group.name} to any table")
+        return False
+
+    def print_results(self):
+        self.tables.sort(key=lambda table: table.id)
+        print_end_report(self.tables)
+        write_output_report(self.tables)
 
 
 def main():
-    print_table_requirements_report(tables)
-    print_start_report(groups, tables)
-
-    solve()
-
-    tables.sort(key=lambda table: table.id)
-    write_output_report(tables)
-
-    print_end_report(tables)
+    tables = get_tables()
+    groups = get_groups()
+    solver = TableSolver(tables, groups)
+    if solver.solve():
+        solver.print_results()
+    else:
+        print("Cannot solve tables")
 
 
 if __name__ == "__main__":
