@@ -1,3 +1,4 @@
+from typing import List
 from dataclasses import dataclass, field
 import csv
 
@@ -7,6 +8,7 @@ class Group:
     name: str
     count: int
     veg: int
+    allocated: bool = False
 
 
 @dataclass
@@ -23,7 +25,7 @@ class Table:
         return sum(group.count for group in self.groups)
 
 
-def get_tables():
+def get_tables() -> List[Table]:
     with open("./data/tables.csv", newline="") as csvfile:
         table_reader = csv.reader(csvfile, delimiter=",", quotechar='"')
         tables = [
@@ -32,7 +34,7 @@ def get_tables():
         return [t for t in tables if t.active]
 
 
-def get_groups():
+def get_groups() -> List[Group]:
     with open("./data/groups.csv", newline="") as csvfile:
         group_reader = csv.reader(csvfile, delimiter=",", quotechar='"')
         groups = [
@@ -40,4 +42,4 @@ def get_groups():
             for row in group_reader
         ]
         groups.sort(key=lambda x: x.count, reverse=True)
-        return groups
+        return [g for g in groups if g.count > 0]
