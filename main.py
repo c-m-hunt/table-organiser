@@ -25,20 +25,25 @@ class TableSolver:
         self.solve()
 
     def solve(self) -> bool:
-
-        if self.current_group_idx == len(self.groups):
+        next_unallocated_group_idx = self.get_next_unallocated_group_idx()
+        if next_unallocated_group_idx is None:
             return True
-        group = self.groups[self.current_group_idx]
+        group = self.groups[next_unallocated_group_idx]
         for table in self.tables:
             if can_add(table, group):
                 table.groups.append(group)
-                self.current_group_idx += 1
+                group.allocated = True
                 if self.solve():
                     return True
                 del table.groups[len(table.groups) - 1]
-                self.current_group_idx -= 1
-        # print(f"Could not add group {group.name} to any table")
+                group.allocated = False
         return False
+
+    def get_next_unallocated_group_idx(self) -> int:
+        for i, group in enumerate(self.groups):
+            if group.allocated is False:
+                return i
+        return None
 
     def print_results(self):
         self.tables.sort(key=lambda table: table.id)

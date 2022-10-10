@@ -8,6 +8,7 @@ class Group:
     name: str
     count: int
     veg: int
+    allocated: bool = False
 
 
 @dataclass
