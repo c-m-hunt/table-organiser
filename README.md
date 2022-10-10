@@ -41,10 +41,15 @@ python3 main.py
 ```
 This will return some basic information:
 ```
-Remaining seats: 204
+Table setup:
+10 seats: 11
+11 seats: 1
+12 seats: 7
+----------------------------
+Remaining seats: 205
 Required seats: 202
 ----------------------------
-Remaining seats: 2
+Remaining seats: 3
 Filled seats: 202
 ----------------------------
 ```

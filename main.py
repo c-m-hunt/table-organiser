@@ -40,10 +40,9 @@ class TableSolver:
         return False
 
     def get_next_unallocated_group_idx(self) -> int:
-        for i, group in enumerate(self.groups):
-            if group.allocated is False:
-                return i
-        return None
+        return next(
+            (i for i, group in enumerate(self.groups) if group.allocated is False), None
+        )
 
     def print_results(self):
         self.tables.sort(key=lambda table: table.id)

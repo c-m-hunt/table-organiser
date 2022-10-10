@@ -9,7 +9,7 @@ def print_table_requirements_report(tables: List[Table]):
     capacity_count = {}
     for table in tables:
         capacity_count[table.capacity] = capacity_count.get(table.capacity, 0) + 1
-    print("Table requirements:")
+    print("Table setup:")
     for capacity in sorted(capacity_count.keys()):
         print(f"{capacity} seats: {capacity_count[capacity]}")
     print("----------------------------")
