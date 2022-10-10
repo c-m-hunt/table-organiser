@@ -1,5 +1,5 @@
 from typing import List
-from table import (
+from table_planner import (
     print_end_report,
     print_start_report,
     write_output_report,

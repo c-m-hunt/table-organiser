@@ -1,6 +1,6 @@
 from typing import List
 
-from table.setup import Group, Table
+from table_planner.setup import Group, Table
 
 
 def remaining_seats(tables: List[Table]):
