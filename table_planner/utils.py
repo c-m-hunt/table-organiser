@@ -16,4 +16,8 @@ def filled_seats(tables: List[Table]):
 
 
 def can_add(table: Table, group: Group) -> bool:
-    return table.remaining_seats() >= group.count
+    if table.remaining_seats() < group.count:
+        return False
+
+    avoid_clubs = {g.name for g in table.groups} & set(group.avoid)
+    return len(avoid_clubs) <= 0

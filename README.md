@@ -2,8 +2,6 @@
 
 Allocates groups of people to tables.
 
-Was planning to do something more complicated that meant you could put groups to not sit togther etc but this suited my needs in the end.
-
 ## Setup
 
 In the root of the repo, create a `data` directory. Add `groups.csv` and `tables.csv`
@@ -27,12 +25,14 @@ CSV with columns:
 * Group name
 * Number in group - an integer with the size of the group
 * Vegetarians - an integer for tne number of vegetarians in the gorup
+* List of groups to avoid - Names of the group separated by a bar (|)
 
 Example:
 ```
 Group 1,10,3
-Group 2,4,2
+Group 2,4,2,Group 1|Group 4
 Group 3,5,1
+Group 4,2,0
 ```
 
 ## Running

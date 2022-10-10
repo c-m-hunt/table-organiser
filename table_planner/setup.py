@@ -8,6 +8,7 @@ class Group:
     name: str
     count: int
     veg: int
+    avoid: List[str]
     allocated: bool = False
 
 
@@ -38,7 +39,12 @@ def get_groups() -> List[Group]:
     with open("./data/groups.csv", newline="") as csvfile:
         group_reader = csv.reader(csvfile, delimiter=",", quotechar='"')
         groups = [
-            Group(row[0], int(row[1]), int(row[2]) if row[2] != "" else 0)
+            Group(
+                row[0],
+                int(row[1]),
+                int(row[2]) if row[2] != "" else 0,
+                row[3].split("|") if len(row) >= 4 and row[3] != "" else [],
+            )
             for row in group_reader
         ]
         groups.sort(key=lambda x: x.count, reverse=True)
