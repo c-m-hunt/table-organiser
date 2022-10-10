@@ -35,7 +35,8 @@ def write_output_report(tables: List[Table]):
 
     for i, table in enumerate(tables):
         rows.append([f"Table {i}", f"{table.filled_seats()} / {table.capacity}"])
-        rows.extend([group.name, group.count] for group in table.groups)
+        rows.extend([group.name, "", group.count, group.veg] for group in table.groups)
+        rows.append(["", "", "", ""])
     with open("./data/output.csv", "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerows(rows)
