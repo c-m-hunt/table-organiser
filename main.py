@@ -9,6 +9,7 @@ from table_planner import (
     Group,
     can_add,
 )
+from table_planner.report import print_table_requirements_report
 
 tables = get_tables()
 groups = get_groups()
@@ -32,6 +33,7 @@ def solve():
 
 
 def main():
+    print_table_requirements_report(tables)
     print_start_report(groups, tables)
 
     solve()
